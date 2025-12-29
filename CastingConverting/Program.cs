@@ -45,3 +45,79 @@ int h = ToInt32(g); // A method of system.convert.
 WriteLine($"\ng is {g}, h is {h}");
 
 #endregion
+
+#region Rounding numbers and the default rounding rules
+
+double[,] doubles =
+{
+    { 9.49, 9.5, 9.51 },
+    { 10.49, 10.5, 10.51 },
+    { 11.49, 11.5, 11.51 },
+    { 12.49, 12.5, 12.51 },
+    { -12.49, -12.5, -12.51 },
+    { -11.49, -11.5, -11.51 },
+    { -10.49, -10.5, -10.51 },
+    { -9.49, -9.5, -9.51 }
+};
+
+WriteLine($"\n| double | ToInt32 | double | ToInt32 | dobule | ToInt32 |");
+for (int x = 0; x < 8; x++)
+{
+    for (int y = 0; y < 3; y++)
+    {
+        Write($"| {doubles[x, y],6} | {ToInt32(doubles[x, y]),7} ");
+    }
+    WriteLine("|");
+}
+WriteLine();
+
+#endregion
+
+#region Taking control of rounding
+WriteLine();
+
+foreach (double n in doubles)
+{
+    WriteLine(format:
+        "Math.Round({0}, 0, MidpointRounding.AwayFromZero) is {1}",
+        arg0: n,
+        arg1: Math.Round(value: n, digits: 0, mode: MidpointRounding.AwayFromZero));
+}
+
+#endregion
+
+#region Converting from any type to a string
+WriteLine();
+
+int number = 12;
+WriteLine(number.ToString());
+bool boolean = true;
+WriteLine(boolean.ToString());
+DateTime now = DateTime.Now;
+WriteLine(now.ToString());
+object me = new();
+WriteLine(me.ToString());
+
+#endregion
+
+#region Converting from a binary object to a string
+WriteLine();
+
+// Allocate an array of 128 bytes.
+byte[] binaryObject = new byte[128];
+
+// Populate the array with random bytes.
+Random.Shared.NextBytes(binaryObject);
+
+WriteLine($"Binary object as bytes");
+for (int index = 0; index < binaryObject.Length; index++)
+{
+    Write($"{binaryObject[index]:X2} ");
+}
+WriteLine();
+
+// Convert the array to base64 string and output as text.
+string encoded = ToBase64String(binaryObject);
+WriteLine($"Binary object as Base64: {encoded}");
+
+#endregion

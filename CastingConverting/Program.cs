@@ -1,5 +1,8 @@
-﻿
+﻿using System.Globalization; // To use cultureInfo
+
 #region Casting numbers implicity and explicitly
+
+using System.Globalization;
 
 int a = 10;
 double b = a; // An int can be safely cast  intoi a double.
@@ -119,5 +122,34 @@ WriteLine();
 // Convert the array to base64 string and output as text.
 string encoded = ToBase64String(binaryObject);
 WriteLine($"Binary object as Base64: {encoded}");
+
+#endregion
+
+#region Parsing from strings to numbers to dates and times
+
+// Set the current culture to make sure date parsing works
+CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
+int friends = int.Parse("27");
+DateTime birthday = DateTime.Parse("4 june 1980");
+WriteLine($"\nI have {friends} friends to invite to my party.");
+WriteLine($"My birthday is {birthday}");
+WriteLine($"My birthday is {birthday:D}");
+
+#endregion
+
+#region Avoiding parse exceptions by using the tryparse method
+
+Write("\nHow many eggs are there? ");
+string? input = ReadLine();
+
+if (int.TryParse(input, out int count))
+{
+    WriteLine($"There are {count} eggs.");
+}
+else
+{
+    WriteLine("I could not parse the input.");
+}
 
 #endregion

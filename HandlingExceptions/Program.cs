@@ -1,18 +1,62 @@
 ﻿
 #region Wrapping error-prone code in a try block
 
-WriteLine("Before parsing");
-Write("What is your age? ");
-string? input = ReadLine();
+//WriteLine("Before parsing");
+//Write("What is your age? ");
+//string? input = ReadLine();
+
+//try
+//{
+//    int age = int.Parse(input!);
+//    WriteLine($"You are {age} years old.");
+//}
+//catch (OverflowException)
+//{
+//    WriteLine("Your age is a valid number format but it is ether too big or small.");
+//}
+//catch (FormatException)
+//{
+//    WriteLine("The age you entered is not a valid number format.");
+//}
+//catch (Exception ex)
+//{
+//    WriteLine($"{ex.GetType()} says {ex.Message}");
+//}
+//WriteLine("After parsing");
+#endregion
+
+#region Throwing overflow exceptions with the check statment
 
 try
 {
-    int age = int.Parse(input!);
-    WriteLine($"You are {age} years old.");
+    checked
+    {
+        int x = int.MaxValue - 1;
+        WriteLine($"Initial value: {x}");
+        x++;
+        WriteLine($"After incrementing: {x}");
+        x++;
+        WriteLine($"After incrementing: {x}");
+        x++;
+        WriteLine($"After incrementing: {x}");
+    }
 }
-catch
+catch (OverflowException)
 {
-
+    WriteLine("The code overflowed but i caught the exception");
 }
-WriteLine("After parsing");
+#endregion
+
+#region Disabling compiler overflow checks with the uncheck statment
+
+unchecked
+{
+    int y = int.MaxValue + 1;
+    WriteLine($"Initial value: {y}");
+    y--;
+    WriteLine($"After decrementing: {y}");
+    y--;
+    WriteLine($"After decrementing: {y}");
+}
+
 #endregion
